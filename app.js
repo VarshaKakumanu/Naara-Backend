@@ -15,8 +15,8 @@ const JWT_SECRET =
   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
 const mongoUrl =
-  "mongodb+srv://adarsh:adarsh@cluster0.zllye.mongodb.net/?retryWrites=true&w=majority";
-
+  "mongodb+srv://root:123@cluster0.ygbwmww.mongodb.net/?retryWrites=true&w=majority";
+//mongodb+srv://root:123@cluster0.ygbwmww.mongodb.net/?retryWrites=true&w=majority
 mongoose
   .connect(mongoUrl, {
     useNewUrlParser: true,
@@ -30,7 +30,20 @@ require("./userDetails");
 
 const User = mongoose.model("UserInfo");
 app.post("/register", async (req, res) => {
-  const { fname, lname, email, password, userType } = req.body;
+  const { companyName,
+    companyType,
+    contactPerson,
+    department,
+    branch,
+    email,
+    number,
+    address,
+    permanentAddress,
+    city,
+    website,
+    description,
+    password,
+} = req.body;
 
   const encryptedPassword = await bcrypt.hash(password, 10);
   try {
@@ -40,11 +53,19 @@ app.post("/register", async (req, res) => {
       return res.json({ error: "User Exists" });
     }
     await User.create({
-      fname,
-      lname,
-      email,
+      companyName,
+          companyType,
+          contactPerson,
+          department,
+          branch,
+          email,
+          number,
+          address,
+          permanentAddress,
+          city,
+          website,
+          description,
       password: encryptedPassword,
-      userType,
     });
     res.send({ status: "ok" });
   } catch (error) {
